@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:background="@color/color_white"
+        android:layout_height="wrap_content"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="@dimen/size_form_peek_height"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <LinearLayout
+            android:id="@+id/layoutAddressFormExpanded"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:visibility="invisible"
+            android:padding="@dimen/padding_16dp"
+            android:background="@color/color_white"
+            android:layout_height="@dimen/size_form_full_height">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_input_field_height"
+                android:orientation="horizontal">
+
+            <RelativeLayout
+                    android:id="@+id/layoutAddressType"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border_field">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:singleLine="true"
+                        android:textSize="@dimen/text_size_regular"
+                        android:imeOptions="actionDone"
+                        android:hint="@string/hint_address_type"
+                        android:layout_centerVertical="true"
+                        android:padding="@dimen/padding_16dp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/margin_16dp"
+                    android:background="@drawable/border_field">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:textSize="@dimen/text_size_regular"
+                        android:singleLine="true"
+                        android:imeOptions="actionDone"
+                        android:hint="@string/hint_address_title"
+                        android:layout_centerVertical="true"
+                        android:padding="@dimen/padding_16dp"/>
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:layout_height="@dimen/size_input_field_height">
+
+            <RelativeLayout
+                    android:id="@+id/layoutAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border_field">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/editTextFullAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:imeOptions="actionDone"
+                        android:hint="@string/hint_address"
+                        android:textSize="@dimen/text_size_regular"
+                        android:singleLine="true"
+                        android:layout_centerVertical="true"
+                        android:padding="@dimen/padding_16dp"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:layout_height="@dimen/size_input_field_height"
+                android:orientation="horizontal">
+
+            <RelativeLayout
+                    android:id="@+id/layoutBuildingNo"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border_field">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:imeOptions="actionDone"
+                        android:textSize="@dimen/text_size_regular"
+                        android:hint="@string/hint_building_number"
+                        android:singleLine="true"
+                        android:layout_centerVertical="true"
+                        android:padding="@dimen/padding_16dp"/>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/margin_16dp"
+                    android:background="@drawable/border_field">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:imeOptions="actionDone"
+                        android:textSize="@dimen/text_size_regular"
+                        android:hint="@string/hint_floor_number"
+                        android:singleLine="true"
+                        android:layout_centerVertical="true"
+                        android:padding="@dimen/padding_16dp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/margin_16dp"
+                    android:background="@drawable/border_field">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:background="@null"
+                        android:singleLine="true"
+                        android:textSize="@dimen/text_size_regular"
+                        android:hint="@string/hint_door_number"
+                        android:layout_centerVertical="true"
+                        android:padding="@dimen/padding_16dp"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:layout_height="@dimen/size_input_field_height">
+
+            <RelativeLayout
+                    android:id="@+id/layoutAddressDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border_field">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:background="@null"
+                        android:hint="@string/hint_address_description"
+                        android:textSize="@dimen/text_size_regular"
+                        android:singleLine="true"
+                        android:layout_centerVertical="true"
+                        android:padding="@dimen/padding_16dp"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_button_height"
+                android:background="@drawable/background_button"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:textColor="@color/color_white"
+                    android:textSize="@dimen/text_size_regular"
+                    android:text="@string/save_address"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+            android:id="@+id/layoutAddressCollapsed"
+            android:layout_width="match_parent"
+            android:visibility="visible"
+            android:layout_height="@dimen/size_form_peek_height">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/margin_16dp"
+                android:background="@drawable/border_field">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:imeOptions="actionDone"
+                    android:text="@string/hint_address"
+                    android:id="@+id/textViewFullAddress"
+                    android:textSize="@dimen/text_size_regular"
+                    android:layout_toLeftOf="@+id/imageViewArrowRight"
+                    android:singleLine="true"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/padding_16dp"/>
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/imageViewArrowRight"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_round_keyboard_arrow_right_24px"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/margin_16dp"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

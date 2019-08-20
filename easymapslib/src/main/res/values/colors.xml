@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_primary">#5D3FBD</color>
+    <color name="color_primary_dark">#4D2EA5</color>
+
+    <color name="color_white">#ffffff</color>
+    <color name="color_gray">#333333</color>
+    <color name="color_gray_light">#666666</color>
+    <color name="color_gray_text_hint">#B1B1B1</color>
+    <color name="color_gray_field_border">#E6E6E6</color>
+
+
+    <color name="color_divider">#AAAAAA</color>
+    <color name="color_divider_transparent">#00AAAAAA</color>
+</resources>

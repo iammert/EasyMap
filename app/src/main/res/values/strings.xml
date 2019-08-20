@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">EasyMaps</string>
+
+    <string name="api_key_maps">AIzaSyDL0e6qYt7dHWwMYcd4l_LzqRlXsJaCu2Q</string>
+</resources>

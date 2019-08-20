@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding_12dp">12dp</dimen>
+    <dimen name="padding_16dp">16dp</dimen>
+
+    <dimen name="margin_4dp">4dp</dimen>
+    <dimen name="margin_8dp">8dp</dimen>
+    <dimen name="margin_12dp">12dp</dimen>
+    <dimen name="margin_16dp">16dp</dimen>
+
+    <dimen name="size_toolbar_height">56dp</dimen>
+    <dimen name="size_search_bar_height">48dp</dimen>
+
+    <dimen name="size_marker">40dp</dimen>
+    <dimen name="size_marker_layout">80dp</dimen>
+
+    <dimen name="size_marker_indicator_width">16dp</dimen>
+    <dimen name="size_marker_indicator_height">8dp</dimen>
+
+    <dimen name="size_input_field_height">48dp</dimen>
+
+    <dimen name="size_form_peek_height">80dp</dimen>
+    <dimen name="size_form_full_height">336dp</dimen>
+
+    <dimen name="size_button_height">48dp</dimen>
+
+    <dimen name="size_address_type_field_width">100dp</dimen>
+
+    <dimen name="text_size_toolbar_title">14sp</dimen>
+
+    <dimen name="text_size_xsmall">10sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_regular">14sp</dimen>
+    <dimen name="text_size_medium">18sp</dimen>
+    <dimen name="text_size_large">20sp</dimen>
+    <dimen name="text_size_xlarge">24sp</dimen>
+
+</resources>

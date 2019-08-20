@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">easymapslib</string>
+
+    //NEVER ADD TO PRODUCTION CODE
+    <string name="api_key_places">AIzaSyDL0e6qYt7dHWwMYcd4l_LzqRlXsJaCu2Q</string>
+
+    <string name="title_toolbar_easy_map">Select Address</string>
+    <string name="hint_search_address">Search address</string>
+
+    <string name="hint_address_type">Type</string>
+    <string name="hint_address_title">Address title</string>
+    <string name="hint_address">Address</string>
+    <string name="hint_building_number">Building No</string>
+    <string name="hint_floor_number">Floor</string>
+    <string name="hint_door_number">Door</string>
+    <string name="hint_address_description">Description</string>
+
+    <string name="save_address">Save</string>
+</resources>

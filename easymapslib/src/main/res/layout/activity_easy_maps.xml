@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_white">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_primary">
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:id="@+id/imageViewArrowBack"
+                            android:padding="@dimen/padding_16dp"
+                            android:clickable="true"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            app:srcCompat="@drawable/ic_round_arrow_white_24px"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@color/color_white"
+                            android:text="@string/title_toolbar_easy_map"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/text_size_toolbar_title"
+                            android:layout_centerVertical="true"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_search_bar_height"
+                        android:focusableInTouchMode="true"
+                        android:background="@color/color_white">
+
+
+                    <RelativeLayout android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/layoutSearchProgress"
+                                    android:animateLayoutChanges="true">
+
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/imageViewSearch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:clickable="true"
+                                android:layout_centerInParent="true"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                app:srcCompat="@drawable/ic_round_search_purple_24px"
+                                android:padding="@dimen/padding_12dp"/>
+
+
+                        <ProgressBar
+                                android:id="@+id/progressBarSearchLoading"
+                                android:theme="@style/CircularProgress"
+                                style="@style/Widget.AppCompat.ProgressBar"
+                                android:layout_width="24dp"
+                                android:visibility="gone"
+                                android:layout_margin="@dimen/margin_12dp"
+                                android:layout_height="24dp"
+                                android:layout_centerInParent="true"/>
+
+                    </RelativeLayout>
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/editTextSearchAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:background="@null"
+                            android:inputType="textCapSentences"
+                            android:textColorHint="@color/color_gray_text_hint"
+                            android:layout_toRightOf="@+id/layoutSearchProgress"
+                            android:hint="@string/hint_search_address"
+                            android:textSize="@dimen/text_size_regular"
+                            android:textColor="@color/color_gray"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imageViewClear"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_round_clear_purple_24px"
+                            android:layout_centerVertical="true"
+                            android:padding="@dimen/padding_12dp"
+                            android:clickable="true"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:layout_alignParentRight="true"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/size_form_peek_height">
+                <fragment
+                        android:id="@+id/mapFragment"
+                        class="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                <com.iammert.easymapslib.ui.view.LocationMarkerView
+                        android:id="@+id/locationMarkerView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+            <com.iammert.easymapslib.ui.view.predictionresult.PredictionResultView
+                    android:id="@+id/predictionResultView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_white"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout android:layout_width="match_parent"
+                                                         android:layout_height="match_parent">
+
+        <include
+                android:id="@+id/layoutBottomSheetForm"
+                layout="@layout/layout_address_form"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</RelativeLayout>
