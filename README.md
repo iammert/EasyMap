@@ -31,7 +31,7 @@ allprojects {
 }
 
 dependencies {
-    implementation ''
+    implementation 'com.github.momento-lab:EasyMap:0.1'
 }
 ```
 
