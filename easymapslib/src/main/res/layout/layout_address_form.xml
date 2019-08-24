@@ -8,6 +8,7 @@
         android:background="@color/color_white"
         android:layout_height="wrap_content"
         app:behavior_hideable="false"
+        app:layout_insetEdge="bottom"
         app:behavior_peekHeight="@dimen/size_form_peek_height"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
@@ -53,6 +54,7 @@
                     android:background="@drawable/border_field">
 
                 <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/editTextAddressTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
@@ -109,6 +111,7 @@
                     android:background="@drawable/border_field">
 
                 <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/editTextBuildingNo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
@@ -130,6 +133,7 @@
                     android:background="@drawable/border_field">
 
                 <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/editTextFloor"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
@@ -150,6 +154,7 @@
                     android:background="@drawable/border_field">
 
                 <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/editTextDoor"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
@@ -176,6 +181,7 @@
                     android:background="@drawable/border_field">
 
                 <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/editTextDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
@@ -191,6 +197,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+                android:id="@+id/buttonSave"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_button_height"
                 android:background="@drawable/background_button"

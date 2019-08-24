@@ -16,28 +16,23 @@ import com.iammert.easymapslib.location.livedata.LocationLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.CameraUpdateFactory
 import android.location.Location
-import android.os.Handler
 import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import kotlinx.android.synthetic.main.activity_easy_maps.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 import com.iammert.easymapslib.R
-import com.iammert.easymapslib.location.geocoder.GeocoderController
 import com.iammert.easymapslib.location.map.GoogleMapController
-import com.iammert.easymapslib.location.places.SearchResultState
 import com.iammert.easymapslib.location.places.SearchResultState.*
 import com.iammert.easymapslib.ui.view.LocationMarkerView
-import com.iammert.easymapslib.ui.view.predictionresult.PredictionResultView
 import kotlinx.android.synthetic.main.activity_easy_maps.layoutBottomSheetForm
 import kotlinx.android.synthetic.main.layout_address_form.*
 import com.iammert.easymapslib.util.*
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.iammert.easymapslib.data.AddressType
+import com.iammert.easymapslib.data.SelectedAddressInfo
+import kotlinx.android.synthetic.main.layout_address_form.view.*
 
 
 class EasyMapsActivity : AppCompatActivity() {
@@ -62,6 +57,8 @@ class EasyMapsActivity : AppCompatActivity() {
         observeFormBottomSheeet()
 
         observeAddressSearch()
+
+        observeToolbarActions()
 
         googleMapController = GoogleMapController()
         googleMapController.addIdleListener(GoogleMap.OnCameraIdleListener {
@@ -184,33 +181,6 @@ class EasyMapsActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeAddressSearch() {
-        editTextSearchAddress.addTextChangedListener(object : SimpleTextWatcher() {
-            override fun afterTextChanged(s: Editable?) {
-                easyMapsViewModel.searchAddress(s.toString())
-            }
-        })
-
-        editTextSearchAddress.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus && predictionResultView.isShowing().not()) {
-                predictionResultView.show()
-                hideBottomSheet()
-            }
-        }
-
-        predictionResultView.setOnItemClicked {
-            hideKeyboard()
-            runAfter(500) {
-                editTextSearchAddress.clearFocus()
-                collapseBottomSheet()
-                predictionResultView.hide()
-                easyMapsViewModel.updateAddress(it)
-            }
-        }
-
-        imageViewClear.setOnClickListener { editTextSearchAddress.setText("") }
-    }
-
     private fun observeFormBottomSheeet() {
         val bottomSheetBehavior = from(layoutBottomSheetForm)
 
@@ -242,6 +212,57 @@ class EasyMapsActivity : AppCompatActivity() {
         })
 
         layoutAddressCollapsed.setOnClickListener { bottomSheetBehavior.state = STATE_EXPANDED }
+
+        layoutBottomSheetForm.buttonSave.setOnClickListener { hideBottomSheet() }
+    }
+
+    private fun observeAddressSearch() {
+        editTextSearchAddress.addTextChangedListener(object : SimpleTextWatcher() {
+            override fun afterTextChanged(s: Editable?) {
+                easyMapsViewModel.searchAddress(s.toString())
+            }
+        })
+
+        editTextSearchAddress.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus && predictionResultView.isShowing().not()) {
+                predictionResultView.show()
+                hideBottomSheet()
+            }
+        }
+
+        predictionResultView.setOnItemClicked {
+            hideKeyboard()
+            runAfter(500) {
+                editTextSearchAddress.clearFocus()
+                collapseBottomSheet()
+                predictionResultView.hide()
+                easyMapsViewModel.updateAddress(it)
+            }
+        }
+
+        imageViewClear.setOnClickListener { editTextSearchAddress.setText("") }
+    }
+
+    private fun observeToolbarActions() {
+        imageViewArrowBack.setOnClickListener { finish() }
+
+        imageViewOk.setOnClickListener {
+            val selectedAddressInfo = SelectedAddressInfo(
+                addressType = AddressType.HOME,
+                addressTitle = editTextAddressTitle.text.toString(),
+                fullAddress = editTextFullAddress.text.toString(),
+                buildingNumber = editTextBuildingNo.text.toString(),
+                floor = editTextFloor.text.toString(),
+                door = editTextDoor.text.toString(),
+                description = editTextDescription.text.toString(),
+                latLng = easyMapsViewModel.getAddressLatLong()
+            )
+
+            Intent()
+                .apply { putExtra(KEY_SELECTED_ADDRESS, selectedAddressInfo) }
+                .also { setResult(Activity.RESULT_OK, it) }
+                .also { finish() }
+        }
     }
 
     private fun updateFormFieldVisibilityOnScroll(slideOffset: Float) {
@@ -303,6 +324,8 @@ class EasyMapsActivity : AppCompatActivity() {
     private fun isCollapsed() = from(layoutBottomSheetForm).state == STATE_COLLAPSED
 
     companion object {
+
+        const val KEY_SELECTED_ADDRESS = "KEY_SELECTED_ADDRESS"
 
         const val REQUEST_CODE_LOCATION_PERMISSION = 12
         const val REQUEST_CODE_LOCATION_SETTINGS = 13

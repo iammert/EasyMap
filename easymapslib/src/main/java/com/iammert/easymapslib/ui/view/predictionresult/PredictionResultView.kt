@@ -28,6 +28,10 @@ class PredictionResultView @JvmOverloads constructor(
 
     private val recyclerViewPredictions: RecyclerView = RecyclerView(context)
 
+    private var onShowListener: (() -> Unit)? = null
+
+    private var onHideListener: (() -> Unit)? = null
+
     private val invisibleAnimator = ObjectAnimator
         .ofFloat(this, "alpha", 1f, 0f)
         .apply {
@@ -71,12 +75,22 @@ class PredictionResultView @JvmOverloads constructor(
         predictionsAdapter.onItemClicked = onItemClicked
     }
 
+    fun setOnShowListener(onShowListener: () -> Unit) {
+        this.onShowListener = onShowListener
+    }
+
+    fun setOnHideListener(onHideListener: () -> Unit) {
+        this.onHideListener = onHideListener
+    }
+
     fun show() {
         visibleAnimator.start()
+        this.onShowListener?.invoke()
     }
 
     fun hide() {
         invisibleAnimator.start()
+        this.onHideListener?.invoke()
     }
 
     fun isShowing(): Boolean = visibility == View.VISIBLE

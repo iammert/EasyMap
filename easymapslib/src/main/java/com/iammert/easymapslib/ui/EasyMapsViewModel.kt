@@ -65,11 +65,18 @@ class EasyMapsViewModel(val app: Application) : AndroidViewModel(app) {
                         moveCameraToLatLong = true
                     )
                 },
-                { throwable -> Log.v("TEST", "Error")})
+                { throwable -> Log.v("TEST", "Error") })
     }
 
     fun searchAddress(searchQuery: String) {
         placesController.searchAddress(searchQuery)
+    }
+
+    fun getAddressLatLong(): LatLng? {
+        selectedAddressViewStateLiveData.value?.selectedAddress?.let {
+            return LatLng(it.longitude, it.longitude)
+        }
+        return null
     }
 
     fun getSelectedAddressViewStateLiveData(): LiveData<SelectedAddressViewState> = selectedAddressViewStateLiveData
