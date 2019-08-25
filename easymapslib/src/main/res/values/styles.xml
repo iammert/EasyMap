@@ -2,11 +2,11 @@
 <resources>
     <!-- Base application theme. -->
     <style name="EasyMapsTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/color_primary</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
 
-    <style name="CircularProgress" parent="Theme.AppCompat.Light">
-        <item name="colorAccent">@color/color_primary</item>
+    <style name="EasyMapsCircularProgress" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">?attr/colorPrimary</item>
     </style>
 </resources>

@@ -251,6 +251,7 @@
                     android:id="@+id/imageViewArrowRight"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_round_keyboard_arrow_right_24px"
+                    app:tint="?attr/colorPrimary"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/margin_16dp"/>

@@ -14,7 +14,7 @@
         <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/color_primary">
+                android:background="?attr/colorPrimary">
 
             <LinearLayout android:layout_width="match_parent"
                           android:layout_height="wrap_content"
@@ -74,6 +74,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:clickable="true"
+                                app:tint="?attr/colorPrimary"
                                 android:layout_centerInParent="true"
                                 android:background="?attr/selectableItemBackgroundBorderless"
                                 app:srcCompat="@drawable/ic_round_search_purple_24px"
@@ -82,7 +83,7 @@
 
                         <ProgressBar
                                 android:id="@+id/progressBarSearchLoading"
-                                android:theme="@style/CircularProgress"
+                                android:theme="@style/EasyMapsCircularProgress"
                                 style="@style/Widget.AppCompat.ProgressBar"
                                 android:layout_width="24dp"
                                 android:visibility="gone"
