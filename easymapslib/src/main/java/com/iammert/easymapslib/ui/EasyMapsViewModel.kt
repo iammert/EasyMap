@@ -86,7 +86,7 @@ class EasyMapsViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     fun updateAddress(address: Address, moveCamera: Boolean) {
-        selectedAddressInfo = this.selectedAddressInfo.copy(address = address)
+        selectedAddressInfo = this.selectedAddressInfo.copy(address = address, fullAddress = address.getAddressLine(0))
         selectedAddressViewStateLiveData.value = SelectedAddressViewState(
             selectedAddress = selectedAddressInfo,
             moveCameraToLatLong = moveCamera

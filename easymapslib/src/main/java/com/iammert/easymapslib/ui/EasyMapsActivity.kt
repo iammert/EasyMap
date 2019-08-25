@@ -55,6 +55,7 @@ class EasyMapsActivity : AppCompatActivity() {
         googleMapController = GoogleMapController()
 
         intent?.extras?.getParcelable<SelectedAddressInfo>(KEY_SELECTED_ADDRESS)?.let {
+            easyMapsViewModel.initializeWithAddress(it)
             fillFormWithInitialValues(it)
         }
 
@@ -88,7 +89,12 @@ class EasyMapsActivity : AppCompatActivity() {
                 LocationData.Status.PERMISSION_REQUIRED -> askLocationPermission(it.permissionList)
                 LocationData.Status.ENABLE_SETTINGS -> enableLocationSettings(it.resolvableApiException)
                 LocationData.Status.LOCATION_SUCCESS -> {
-                    updateUserLocation(it.location?.latitude, it.location?.longitude)
+                    if (easyMapsViewModel.isInitializedWithAddress()) {
+                        val currentAddressInfo = easyMapsViewModel.getSelectedAddressInfo()
+                        updateUserLocation(currentAddressInfo.address?.latitude, currentAddressInfo.address?.longitude)
+                    } else {
+                        updateUserLocation(it.location?.latitude, it.location?.longitude)
+                    }
                 }
             }
         })
