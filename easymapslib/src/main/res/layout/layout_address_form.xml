@@ -42,7 +42,10 @@
                         android:inputType="textCapSentences"
                         android:hint="@string/hint_address_title"
                         android:layout_centerVertical="true"
-                        android:padding="@dimen/padding_16dp"/>
+                        android:paddingTop="@dimen/padding_12dp"
+                        android:paddingBottom="@dimen/padding_12dp"
+                        android:paddingLeft="@dimen/margin_16dp"
+                        android:paddingRight="@dimen/margin_16dp"/>
 
             </RelativeLayout>
 
@@ -71,7 +74,10 @@
                         android:textSize="@dimen/text_size_regular"
                         android:singleLine="true"
                         android:layout_centerVertical="true"
-                        android:padding="@dimen/padding_16dp"/>
+                        android:paddingTop="@dimen/padding_12dp"
+                        android:paddingBottom="@dimen/padding_12dp"
+                        android:paddingLeft="@dimen/margin_16dp"
+                        android:paddingRight="@dimen/margin_16dp"/>
 
             </RelativeLayout>
 
@@ -101,7 +107,10 @@
                         android:hint="@string/hint_building_number"
                         android:singleLine="true"
                         android:layout_centerVertical="true"
-                        android:padding="@dimen/padding_16dp"/>
+                        android:paddingTop="@dimen/padding_12dp"
+                        android:paddingBottom="@dimen/padding_12dp"
+                        android:paddingLeft="@dimen/margin_16dp"
+                        android:paddingRight="@dimen/margin_16dp"/>
 
             </RelativeLayout>
 
@@ -124,7 +133,10 @@
                         android:hint="@string/hint_floor_number"
                         android:singleLine="true"
                         android:layout_centerVertical="true"
-                        android:padding="@dimen/padding_16dp"/>
+                        android:paddingTop="@dimen/padding_12dp"
+                        android:paddingBottom="@dimen/padding_12dp"
+                        android:paddingLeft="@dimen/margin_16dp"
+                        android:paddingRight="@dimen/margin_16dp"/>
 
             </RelativeLayout>
 
@@ -146,7 +158,10 @@
                         android:textSize="@dimen/text_size_regular"
                         android:hint="@string/hint_door_number"
                         android:layout_centerVertical="true"
-                        android:padding="@dimen/padding_16dp"/>
+                        android:paddingTop="@dimen/padding_12dp"
+                        android:paddingBottom="@dimen/padding_12dp"
+                        android:paddingLeft="@dimen/margin_16dp"
+                        android:paddingRight="@dimen/margin_16dp"/>
 
             </RelativeLayout>
 
@@ -174,7 +189,10 @@
                         android:textSize="@dimen/text_size_regular"
                         android:singleLine="true"
                         android:layout_centerVertical="true"
-                        android:padding="@dimen/padding_16dp"/>
+                        android:paddingTop="@dimen/padding_12dp"
+                        android:paddingBottom="@dimen/padding_12dp"
+                        android:paddingLeft="@dimen/margin_16dp"
+                        android:paddingRight="@dimen/margin_16dp"/>
 
             </RelativeLayout>
 
