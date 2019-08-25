@@ -6,7 +6,6 @@ import android.os.Parcelable
 import com.google.android.gms.maps.model.LatLng
 
 data class SelectedAddressInfo(
-    val addressType: AddressType,
     val addressTitle: String,
     val fullAddress: String,
     val buildingNumber: String,
@@ -16,7 +15,6 @@ data class SelectedAddressInfo(
     val address: Address?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-        AddressType.valueOf(parcel.readString()),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -27,7 +25,6 @@ data class SelectedAddressInfo(
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(this.addressType.name)
         parcel.writeString(addressTitle)
         parcel.writeString(fullAddress)
         parcel.writeString(buildingNumber)
@@ -59,7 +56,6 @@ data class SelectedAddressInfo(
 
         fun empty(): SelectedAddressInfo {
             return SelectedAddressInfo(
-                AddressType.HOME,
                 addressTitle = "",
                 fullAddress = "",
                 buildingNumber = "",

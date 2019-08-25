@@ -21,37 +21,14 @@
             android:background="@color/color_white"
             android:layout_height="@dimen/size_form_full_height">
 
-        <LinearLayout
+        <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_input_field_height"
-                android:orientation="horizontal">
+                android:layout_height="@dimen/size_input_field_height">
+
 
             <RelativeLayout
-                    android:id="@+id/layoutAddressType"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/border_field">
-
-                <androidx.appcompat.widget.AppCompatEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:singleLine="true"
-                        android:textSize="@dimen/text_size_regular"
-                        android:imeOptions="actionNext"
-                        android:inputType="textCapSentences"
-                        android:hint="@string/hint_address_type"
-                        android:layout_centerVertical="true"
-                        android:padding="@dimen/padding_16dp"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/margin_16dp"
                     android:background="@drawable/border_field">
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -69,8 +46,8 @@
 
             </RelativeLayout>
 
+        </RelativeLayout>
 
-        </LinearLayout>
 
         <RelativeLayout
                 android:layout_width="match_parent"

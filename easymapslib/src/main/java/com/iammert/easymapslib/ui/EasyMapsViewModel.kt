@@ -6,20 +6,15 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.model.AutocompletePrediction
-import com.iammert.easymapslib.data.AddressType
 import com.iammert.easymapslib.data.SelectedAddressInfo
 import com.iammert.easymapslib.location.geocoder.GeocoderController
-import com.iammert.easymapslib.location.places.AddressInfo
 import com.iammert.easymapslib.location.places.PlacesController
 import com.iammert.easymapslib.location.places.SearchResultResource
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.layout_address_form.*
 
 class EasyMapsViewModel(val app: Application) : AndroidViewModel(app) {
 
@@ -99,10 +94,6 @@ class EasyMapsViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun updateFloorNumber(floor: String) {
         selectedAddressInfo = selectedAddressInfo.copy(floor = floor)
-    }
-
-    fun updateType(addressType: AddressType) {
-        selectedAddressInfo = selectedAddressInfo.copy(addressType = addressType)
     }
 
     fun updateDoorNumber(doorNumber: String) {

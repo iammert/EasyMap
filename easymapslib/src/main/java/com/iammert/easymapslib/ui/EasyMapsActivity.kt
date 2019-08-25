@@ -15,8 +15,6 @@ import com.iammert.easymapslib.location.livedata.LocationData
 import com.iammert.easymapslib.location.livedata.LocationLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.CameraUpdateFactory
-import android.location.Location
-import android.text.Editable
 import kotlinx.android.synthetic.main.activity_easy_maps.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import android.view.View
@@ -311,12 +309,6 @@ class EasyMapsActivity : AppCompatActivity() {
         }
     }
 
-    private fun expandBottomSheet() {
-        val formBehavior = from(layoutBottomSheetForm)
-        formBehavior.isHideable = false
-        formBehavior.state = STATE_EXPANDED
-    }
-
     private fun collapseBottomSheet() {
         val formBehavior = from(layoutBottomSheetForm)
         formBehavior.isHideable = false
@@ -341,7 +333,6 @@ class EasyMapsActivity : AppCompatActivity() {
             editTextFloor.setText(floor)
             editTextAddressTitle.setText(addressTitle)
         }
-
     }
 
     companion object {
