@@ -23,6 +23,22 @@ Ready to use address selection activity using Google Maps.
         android:value="YOUR_API_KEY"/>
 ```
 
+## You are ready
+```kotlin
+startActivityForResult(EasyMapsActivity.newIntent(context = this), REQUEST_CODE)
+// If you want to edit selected address
+startActivityForResult(EasyMapsActivity.newIntent(context = this, selectedAddressInfo = selectedAddressInfo), REQUEST_CODE)
+```
+
+```kotlin
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        selectedAddressInfo = data?.extras?.getParcelable(EasyMapsActivity.KEY_SELECTED_ADDRESS)
+    }
+}
+```
+
+
 # Dependency
 
 ```groovy
