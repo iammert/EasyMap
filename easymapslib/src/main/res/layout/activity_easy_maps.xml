@@ -112,6 +112,7 @@
                             app:srcCompat="@drawable/ic_round_clear_purple_24px"
                             android:layout_centerVertical="true"
                             android:padding="@dimen/padding_12dp"
+                            android:visibility="gone"
                             android:clickable="true"
                             android:background="?attr/selectableItemBackgroundBorderless"
                             android:layout_alignParentRight="true"/>

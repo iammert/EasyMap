@@ -4,17 +4,21 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.iammert.easymapslib.data.SelectedAddressInfo
 import com.iammert.easymapslib.ui.EasyMapsActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    private var selectedAddressInfo: SelectedAddressInfo? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        startActivityForResult(EasyMapsActivity.newIntent(this), 11)
+        buttonSelectAddress.setOnClickListener {
+            startActivityForResult(EasyMapsActivity.newIntent(this, selectedAddressInfo), 11)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -22,10 +26,8 @@ class MainActivity : AppCompatActivity() {
 
         if (requestCode == 11) {
             if (resultCode == Activity.RESULT_OK) {
-                Log.v(
-                    "TEST",
-                    "data ${data?.extras?.getParcelable<SelectedAddressInfo>(EasyMapsActivity.KEY_SELECTED_ADDRESS)}"
-                )
+                selectedAddressInfo = data?.extras?.getParcelable(EasyMapsActivity.KEY_SELECTED_ADDRESS)
+                textViewAddress.text = selectedAddressInfo.toString()
             }
         }
     }

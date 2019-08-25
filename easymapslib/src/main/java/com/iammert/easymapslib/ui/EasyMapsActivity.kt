@@ -29,8 +29,6 @@ import com.iammert.easymapslib.ui.view.LocationMarkerView
 import kotlinx.android.synthetic.main.activity_easy_maps.layoutBottomSheetForm
 import kotlinx.android.synthetic.main.layout_address_form.*
 import com.iammert.easymapslib.util.*
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.iammert.easymapslib.data.AddressType
 import com.iammert.easymapslib.data.SelectedAddressInfo
 import kotlinx.android.synthetic.main.layout_address_form.view.*
 
@@ -54,18 +52,23 @@ class EasyMapsActivity : AppCompatActivity() {
 
         easyMapsViewModel = ViewModelProviders.of(this).get(EasyMapsViewModel::class.java)
 
+        googleMapController = GoogleMapController()
+
+        intent?.extras?.getParcelable<SelectedAddressInfo>(KEY_SELECTED_ADDRESS)?.let {
+            fillFormWithInitialValues(it)
+        }
+
         observeFormBottomSheeet()
 
         observeAddressSearch()
 
         observeToolbarActions()
 
-        googleMapController = GoogleMapController()
         googleMapController.addIdleListener(GoogleMap.OnCameraIdleListener {
             googleMapController.getMap()?.let { map ->
                 val markerPoint = locationMarkerView.getMarkerPoint()
                 val markerLatLong = map.projection.fromScreenLocation(markerPoint)
-                easyMapsViewModel.updateAddress(markerLatLong)
+                easyMapsViewModel.updateLatLong(markerLatLong)
             }
         })
 
@@ -84,7 +87,9 @@ class EasyMapsActivity : AppCompatActivity() {
             when (it?.status) {
                 LocationData.Status.PERMISSION_REQUIRED -> askLocationPermission(it.permissionList)
                 LocationData.Status.ENABLE_SETTINGS -> enableLocationSettings(it.resolvableApiException)
-                LocationData.Status.LOCATION_SUCCESS -> updateUserLocation(it.location!!)
+                LocationData.Status.LOCATION_SUCCESS -> {
+                    updateUserLocation(it.location?.latitude, it.location?.longitude)
+                }
             }
         })
 
@@ -103,12 +108,11 @@ class EasyMapsActivity : AppCompatActivity() {
         }
 
         easyMapsViewModel.getSelectedAddressViewStateLiveData().observe(this, Observer {
-            val addressLine = it.selectedAddress.getAddressLine(0)
-            editTextFullAddress.setText(addressLine)
-            textViewFullAddress.text = addressLine
+            editTextFullAddress.setText(it.getFullAddressText())
+            textViewFullAddress.text = it.getFullAddressText()
 
             if (it.moveCameraToLatLong) {
-                googleMapController.animateCamera(it.selectedAddress.latitude, it.selectedAddress.longitude)
+                googleMapController.animateCamera(it.getLatitude(), it.getLongitude())
             }
         })
 
@@ -170,13 +174,13 @@ class EasyMapsActivity : AppCompatActivity() {
     }
 
     @SuppressLint("MissingPermission")
-    private fun updateUserLocation(location: Location) {
+    private fun updateUserLocation(latitude: Double?, longitude: Double?) {
         googleMapController.getMap()?.let { map ->
             if (isMapsInitialized.not()) {
                 isMapsInitialized = true
                 map.isMyLocationEnabled = true
                 map.uiSettings.isMyLocationButtonEnabled = true
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude, location.longitude), 14.0f))
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude ?: 0.0, longitude ?: 0.0), 14.0f))
             }
         }
     }
@@ -213,15 +217,26 @@ class EasyMapsActivity : AppCompatActivity() {
 
         layoutAddressCollapsed.setOnClickListener { bottomSheetBehavior.state = STATE_EXPANDED }
 
-        layoutBottomSheetForm.buttonSave.setOnClickListener { hideBottomSheet() }
+        layoutBottomSheetForm.buttonSave.setOnClickListener {
+            collapseBottomSheet()
+        }
+
+        editTextBuildingNo.afterTextChanged { easyMapsViewModel.updateBuildingNumber(it) }
+
+        editTextDescription.afterTextChanged { easyMapsViewModel.updateDescription(it) }
+
+        editTextDoor.afterTextChanged { easyMapsViewModel.updateDoorNumber(it) }
+
+        editTextFloor.afterTextChanged { easyMapsViewModel.updateFloorNumber(it) }
+
+        editTextAddressTitle.afterTextChanged { easyMapsViewModel.updateAddressTitle(it) }
     }
 
     private fun observeAddressSearch() {
-        editTextSearchAddress.addTextChangedListener(object : SimpleTextWatcher() {
-            override fun afterTextChanged(s: Editable?) {
-                easyMapsViewModel.searchAddress(s.toString())
-            }
-        })
+        editTextSearchAddress.afterTextChanged {
+            imageViewClear.visibility = if (it.isNotEmpty()) View.VISIBLE else View.GONE
+            easyMapsViewModel.searchAddress(it)
+        }
 
         editTextSearchAddress.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus && predictionResultView.isShowing().not()) {
@@ -236,7 +251,7 @@ class EasyMapsActivity : AppCompatActivity() {
                 editTextSearchAddress.clearFocus()
                 collapseBottomSheet()
                 predictionResultView.hide()
-                easyMapsViewModel.updateAddress(it)
+                easyMapsViewModel.updateAutoCompletePrediction(it)
             }
         }
 
@@ -247,19 +262,8 @@ class EasyMapsActivity : AppCompatActivity() {
         imageViewArrowBack.setOnClickListener { finish() }
 
         imageViewOk.setOnClickListener {
-            val selectedAddressInfo = SelectedAddressInfo(
-                addressType = AddressType.HOME,
-                addressTitle = editTextAddressTitle.text.toString(),
-                fullAddress = editTextFullAddress.text.toString(),
-                buildingNumber = editTextBuildingNo.text.toString(),
-                floor = editTextFloor.text.toString(),
-                door = editTextDoor.text.toString(),
-                description = editTextDescription.text.toString(),
-                latLng = easyMapsViewModel.getAddressLatLong()
-            )
-
             Intent()
-                .apply { putExtra(KEY_SELECTED_ADDRESS, selectedAddressInfo) }
+                .apply { putExtra(KEY_SELECTED_ADDRESS, easyMapsViewModel.getSelectedAddressInfo()) }
                 .also { setResult(Activity.RESULT_OK, it) }
                 .also { finish() }
         }
@@ -321,7 +325,18 @@ class EasyMapsActivity : AppCompatActivity() {
 
     private fun isExpanded() = from(layoutBottomSheetForm).state == STATE_EXPANDED
 
-    private fun isCollapsed() = from(layoutBottomSheetForm).state == STATE_COLLAPSED
+    private fun fillFormWithInitialValues(selectedAddressInfo: SelectedAddressInfo) {
+        with(selectedAddressInfo) {
+            textViewFullAddress.text = fullAddress
+            editTextFullAddress.setText(fullAddress)
+            editTextBuildingNo.setText(buildingNumber)
+            editTextDescription.setText(description)
+            editTextDoor.setText(door)
+            editTextFloor.setText(floor)
+            editTextAddressTitle.setText(addressTitle)
+        }
+
+    }
 
     companion object {
 
@@ -330,8 +345,9 @@ class EasyMapsActivity : AppCompatActivity() {
         const val REQUEST_CODE_LOCATION_PERMISSION = 12
         const val REQUEST_CODE_LOCATION_SETTINGS = 13
 
-        fun newIntent(context: Context): Intent {
+        fun newIntent(context: Context, selectedAddressInfo: SelectedAddressInfo? = null): Intent {
             return Intent(context, EasyMapsActivity::class.java)
+                .apply { putExtra(KEY_SELECTED_ADDRESS, selectedAddressInfo) }
         }
     }
 }

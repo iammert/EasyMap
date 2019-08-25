@@ -1,5 +1,6 @@
 package com.iammert.easymapslib.data
 
+import android.location.Address
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.android.gms.maps.model.LatLng
@@ -12,7 +13,7 @@ data class SelectedAddressInfo(
     val floor: String,
     val door: String,
     val description: String,
-    val latLng: LatLng?
+    val address: Address?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         AddressType.valueOf(parcel.readString()),
@@ -22,7 +23,7 @@ data class SelectedAddressInfo(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readParcelable(LatLng::class.java.classLoader)
+        parcel.readParcelable(Address::class.java.classLoader)
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -33,11 +34,18 @@ data class SelectedAddressInfo(
         parcel.writeString(floor)
         parcel.writeString(door)
         parcel.writeString(description)
-        parcel.writeParcelable(latLng, flags)
+        parcel.writeParcelable(address, flags)
     }
 
     override fun describeContents(): Int {
         return 0
+    }
+
+    fun getLatLng(): LatLng {
+        address?.let {
+            return LatLng(it.latitude, it.longitude)
+        }
+        return LatLng(0.0, 0.0)
     }
 
     companion object CREATOR : Parcelable.Creator<SelectedAddressInfo> {
@@ -47,6 +55,19 @@ data class SelectedAddressInfo(
 
         override fun newArray(size: Int): Array<SelectedAddressInfo?> {
             return arrayOfNulls(size)
+        }
+
+        fun empty(): SelectedAddressInfo {
+            return SelectedAddressInfo(
+                AddressType.HOME,
+                addressTitle = "",
+                fullAddress = "",
+                buildingNumber = "",
+                floor = "",
+                door = "",
+                description = "",
+                address = null
+            )
         }
     }
 }
