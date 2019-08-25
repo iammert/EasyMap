@@ -1,6 +1,3 @@
-# Should I use this?
-* No. Not yet.
-
 # EasyMap
 Ready to use address selection activity using Google Maps.
 
