@@ -2,7 +2,7 @@
     <string name="app_name">easymapslib</string>
 
     //NEVER ADD TO PRODUCTION CODE
-    <string name="api_key_places">AIzaSyDL0e6qYt7dHWwMYcd4l_LzqRlXsJaCu2Q</string>
+    <string name="maps_api_key">AIzaSyDL0e6qYt7dHWwMYcd4l_LzqRlXsJaCu2Q</string>
 
     <string name="title_toolbar_easy_map">Select Address</string>
     <string name="hint_search_address">Search address</string>

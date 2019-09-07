@@ -36,7 +36,7 @@ class PlacesController(application: Application) {
     private val searchQueryAddressResultSubject = PublishSubject.create<SearchResultResource>()
 
     init {
-        Places.initialize(application, application.getString(R.string.api_key_places))
+        Places.initialize(application, application.getString(R.string.maps_api_key))
         placesClient = Places.createClient(application)
 
         searchQueryDisposable = searchQuerySubject
