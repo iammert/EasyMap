@@ -342,6 +342,7 @@ class EasyMapsActivity : AppCompatActivity() {
         const val REQUEST_CODE_LOCATION_PERMISSION = 12
         const val REQUEST_CODE_LOCATION_SETTINGS = 13
 
+        @JvmStatic
         fun newIntent(context: Context, selectedAddressInfo: SelectedAddressInfo? = null): Intent {
             return Intent(context, EasyMapsActivity::class.java)
                 .apply { putExtra(KEY_SELECTED_ADDRESS, selectedAddressInfo) }
