@@ -1,7 +1,16 @@
+<img src="https://raw.githubusercontent.com/momento-lab/EasyMap/master/art/artcover.png"/>
+
 # EasyMap
 Ready to use address selection activity using Google Maps.
 
+# Features
+- Select location from maps
+- Search address (Places api works behind)
+- Ready to use address form (Address title, floor, door, description etc.)
+- Automatically access and show current location.
+
 # Demo
+<img src="https://raw.githubusercontent.com/momento-lab/EasyMap/master/art/demo.gif"/>
 
 # Implementation 
 
