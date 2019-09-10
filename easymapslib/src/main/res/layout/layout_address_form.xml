@@ -114,12 +114,12 @@
 
             </RelativeLayout>
 
-
             <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/margin_16dp"
+                    android:visibility="gone"
                     android:background="@drawable/border_field">
 
                 <androidx.appcompat.widget.AppCompatEditText

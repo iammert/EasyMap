@@ -5,13 +5,13 @@
     <string name="hint_search_address">Adres Ara</string>
 
     <string name="hint_address_type">Tip</string>
-    <string name="hint_address_title">Adres başlığı</string>
+    <string name="hint_address_title">Adres başlığı (Ev, İşyeri vb.)</string>
     <string name="hint_address">Adres</string>
     <string name="hint_building_number">Apartman No</string>
     <string name="hint_floor_number">Kat</string>
     <string name="hint_door_number">Daire No</string>
     <string name="hint_address_description">Açıklama</string>
 
-    <string name="save_address">Kaydet</string>
+    <string name="save_address">Adresi Kaydet</string>
 
 </resources>
