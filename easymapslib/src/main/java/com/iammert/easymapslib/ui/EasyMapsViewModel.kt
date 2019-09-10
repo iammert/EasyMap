@@ -43,15 +43,17 @@ class EasyMapsViewModel(val app: Application) : AndroidViewModel(app) {
             .getAddressObservable()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { updateAddress(it, false) }
+            .subscribe(
+                { updateAddress(it, false) },
+                { Log.v(EasyMapsViewModel::class.java.name, it.message) })
 
         searchAddressResultDisposable = placesController
             .getSearchResultObservable()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                searchQueryResultLiveData.value = it
-            }
+            .subscribe(
+                { searchQueryResultLiveData.value = it },
+                { Log.v(EasyMapsViewModel::class.java.name, it.message) })
     }
 
     fun initializeWithAddress(selectedAddressInfo: SelectedAddressInfo) {
@@ -71,17 +73,21 @@ class EasyMapsViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     fun updateAutoCompletePrediction(autocompletePrediction: AutocompletePrediction) {
-        addressDetailDisposable = placesController.getAddressDetailObservable(autocompletePrediction)
-            .flatMap { geocoderController.getAddress(it.latLong!!) }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { address -> updateAddress(address, true) },
-                { throwable -> Log.v("TEST", "Error") })
+        addressDetailDisposable =
+            placesController.getAddressDetailObservable(autocompletePrediction)
+                .flatMap { geocoderController.getAddress(it.latLong!!) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { address -> updateAddress(address, true) },
+                    { throwable -> Log.v("TEST", "Error") })
     }
 
     fun updateAddress(address: Address, moveCamera: Boolean) {
-        selectedAddressInfo = this.selectedAddressInfo.copy(address = address, fullAddress = address.getAddressLine(0))
+        selectedAddressInfo = this.selectedAddressInfo.copy(
+            address = address,
+            fullAddress = address.getAddressLine(0)
+        )
         selectedAddressViewStateLiveData.value = SelectedAddressViewState(
             selectedAddress = selectedAddressInfo,
             moveCameraToLatLong = moveCamera
@@ -116,7 +122,8 @@ class EasyMapsViewModel(val app: Application) : AndroidViewModel(app) {
         return selectedAddressInfo
     }
 
-    fun getSelectedAddressViewStateLiveData(): LiveData<SelectedAddressViewState> = selectedAddressViewStateLiveData
+    fun getSelectedAddressViewStateLiveData(): LiveData<SelectedAddressViewState> =
+        selectedAddressViewStateLiveData
 
     fun getSearchQueryResultLiveData(): LiveData<SearchResultResource> = searchQueryResultLiveData
 
