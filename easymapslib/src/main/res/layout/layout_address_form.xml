@@ -25,8 +25,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_input_field_height">
 
-
             <RelativeLayout
+                    android:id="@+id/layoutAddressTitle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/border_field">
@@ -120,6 +120,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/margin_16dp"
                     android:visibility="gone"
+                    android:id="@+id/layoutFloor"
                     android:background="@drawable/border_field">
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -145,6 +146,7 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/margin_16dp"
+                    android:id="@+id/layoutDoor"
                     android:background="@drawable/border_field">
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -230,6 +232,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/margin_16dp"
+                android:layout_toLeftOf="@+id/buttonDone"
                 android:background="@drawable/border_field">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -257,6 +260,19 @@
                     android:layout_marginRight="@dimen/margin_16dp"/>
 
         </RelativeLayout>
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonDone"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="48dp"
+                app:iconPadding="0dp"
+                android:layout_height="60dp"
+                app:icon="@drawable/ic_round_check_24px"
+                app:backgroundTint="?attr/colorPrimary"
+                app:iconGravity="textStart"
+                android:layout_marginRight="@dimen/margin_16dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"/>
 
     </RelativeLayout>
 

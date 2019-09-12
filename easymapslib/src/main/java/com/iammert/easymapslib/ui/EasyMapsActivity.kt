@@ -89,7 +89,10 @@ class EasyMapsActivity : AppCompatActivity() {
                 LocationData.Status.LOCATION_SUCCESS -> {
                     if (easyMapsViewModel.isInitializedWithAddress()) {
                         val currentAddressInfo = easyMapsViewModel.getSelectedAddressInfo()
-                        updateUserLocation(currentAddressInfo.address?.latitude, currentAddressInfo.address?.longitude)
+                        updateUserLocation(
+                            currentAddressInfo.address?.latitude,
+                            currentAddressInfo.address?.longitude
+                        )
                     } else {
                         updateUserLocation(it.location?.latitude, it.location?.longitude)
                     }
@@ -140,7 +143,11 @@ class EasyMapsActivity : AppCompatActivity() {
         })
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (PermissionUtils.isPermissionResultsGranted(grantResults)) {
             locationLiveData.start()
@@ -184,7 +191,14 @@ class EasyMapsActivity : AppCompatActivity() {
                 isMapsInitialized = true
                 map.isMyLocationEnabled = true
                 map.uiSettings.isMyLocationButtonEnabled = true
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude ?: 0.0, longitude ?: 0.0), 14.0f))
+                map.moveCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(
+                            latitude ?: 0.0,
+                            longitude ?: 0.0
+                        ), 14.0f
+                    )
+                )
             }
         }
     }
@@ -192,7 +206,8 @@ class EasyMapsActivity : AppCompatActivity() {
     private fun observeFormBottomSheeet() {
         val bottomSheetBehavior = from(layoutBottomSheetForm)
 
-        bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        bottomSheetBehavior.setBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 updateFormFieldVisibilityOnScroll(slideOffset)
                 locationMarkerView.updateMarkerViewPosition(slideOffset)
@@ -225,15 +240,25 @@ class EasyMapsActivity : AppCompatActivity() {
             collapseBottomSheet()
         }
 
-        editTextBuildingNo.afterTextChanged { easyMapsViewModel.updateBuildingNumber(it) }
+        editTextBuildingNo.afterTextChanged {
+            easyMapsViewModel.updateBuildingNumber(it)
+            layoutBuildingNo.setBackgroundResource(R.drawable.border_field)
+        }
 
-        editTextDescription.afterTextChanged { easyMapsViewModel.updateDescription(it) }
+        editTextDescription.afterTextChanged {
+            easyMapsViewModel.updateDescription(it)
+            layoutAddressDescription.setBackgroundResource(R.drawable.border_field)
+        }
 
-        editTextDoor.afterTextChanged { easyMapsViewModel.updateDoorNumber(it) }
+        editTextDoor.afterTextChanged {
+            easyMapsViewModel.updateDoorNumber(it)
+            layoutDoor.setBackgroundResource(R.drawable.border_field)
+        }
 
-        editTextFloor.afterTextChanged { easyMapsViewModel.updateFloorNumber(it) }
-
-        editTextAddressTitle.afterTextChanged { easyMapsViewModel.updateAddressTitle(it) }
+        editTextAddressTitle.afterTextChanged {
+            easyMapsViewModel.updateAddressTitle(it)
+            layoutAddressTitle.setBackgroundResource(R.drawable.border_field)
+        }
     }
 
     private fun observeAddressSearch() {
@@ -265,11 +290,20 @@ class EasyMapsActivity : AppCompatActivity() {
     private fun observeToolbarActions() {
         imageViewArrowBack.setOnClickListener { finish() }
 
-        imageViewOk.setOnClickListener {
-            Intent()
-                .apply { putExtra(KEY_SELECTED_ADDRESS, easyMapsViewModel.getSelectedAddressInfo()) }
-                .also { setResult(Activity.RESULT_OK, it) }
-                .also { finish() }
+        buttonDone.setOnClickListener {
+            if (validateForm()) {
+                Intent()
+                    .apply {
+                        putExtra(
+                            KEY_SELECTED_ADDRESS,
+                            easyMapsViewModel.getSelectedAddressInfo()
+                        )
+                    }
+                    .also { setResult(Activity.RESULT_OK, it) }
+                    .also { finish() }
+            } else {
+                from(layoutBottomSheetForm).state = STATE_EXPANDED
+            }
         }
     }
 
@@ -330,9 +364,29 @@ class EasyMapsActivity : AppCompatActivity() {
             editTextBuildingNo.setText(buildingNumber)
             editTextDescription.setText(description)
             editTextDoor.setText(door)
-            editTextFloor.setText(floor)
             editTextAddressTitle.setText(addressTitle)
         }
+    }
+
+    private fun validateForm(): Boolean {
+        var isValidationOK = true
+
+        if (editTextBuildingNo.text.isNullOrBlank()) {
+            layoutBuildingNo.setBackgroundResource(R.drawable.border_field_required)
+            isValidationOK = false
+        }
+
+        if (editTextAddressTitle.text.isNullOrBlank()) {
+            layoutAddressTitle.setBackgroundResource(R.drawable.border_field_required)
+            isValidationOK = false
+        }
+
+        if (editTextDoor.text.isNullOrBlank()) {
+            layoutDoor.setBackgroundResource(R.drawable.border_field_required)
+            isValidationOK = false
+        }
+
+        return isValidationOK
     }
 
     companion object {

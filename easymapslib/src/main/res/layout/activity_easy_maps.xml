@@ -43,17 +43,6 @@
                             android:textSize="@dimen/text_size_toolbar_title"
                             android:layout_centerVertical="true"/>
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/imageViewOk"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:padding="@dimen/padding_16dp"
-                            android:clickable="true"
-                            android:background="?attr/selectableItemBackgroundBorderless"
-                            app:srcCompat="@drawable/ic_round_check_24px"/>
-
                 </RelativeLayout>
 
                 <RelativeLayout
