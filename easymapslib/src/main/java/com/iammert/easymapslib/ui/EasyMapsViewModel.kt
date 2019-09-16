@@ -12,9 +12,12 @@ import com.iammert.easymapslib.data.SelectedAddressInfo
 import com.iammert.easymapslib.location.geocoder.GeocoderController
 import com.iammert.easymapslib.location.places.PlacesController
 import com.iammert.easymapslib.location.places.SearchResultResource
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import java.lang.Exception
+import java.util.*
 
 class EasyMapsViewModel(val app: Application) : AndroidViewModel(app) {
 
@@ -41,6 +44,7 @@ class EasyMapsViewModel(val app: Application) : AndroidViewModel(app) {
 
         selectedAddressDisposable = geocoderController
             .getAddressObservable()
+            .onErrorResumeNext { t: Throwable -> Observable.just(Address(Locale.getDefault())) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -80,13 +84,19 @@ class EasyMapsViewModel(val app: Application) : AndroidViewModel(app) {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { address -> updateAddress(address, true) },
-                    { throwable -> Log.v("TEST", "Error") })
+                    { })
     }
 
     fun updateAddress(address: Address, moveCamera: Boolean) {
+        val addressLine: String = if (address.getAddressLine(0) != null) {
+            address.getAddressLine(0)
+        } else {
+            ""
+        }
+
         selectedAddressInfo = this.selectedAddressInfo.copy(
             address = address,
-            fullAddress = address.getAddressLine(0)
+            fullAddress = addressLine
         )
         selectedAddressViewStateLiveData.value = SelectedAddressViewState(
             selectedAddress = selectedAddressInfo,
@@ -145,6 +155,7 @@ class EasyMapsViewModel(val app: Application) : AndroidViewModel(app) {
 
         placesController.destroy()
         geocoderController.destroy()
+        Log.v("TEST", "destroyed")
     }
 
 }

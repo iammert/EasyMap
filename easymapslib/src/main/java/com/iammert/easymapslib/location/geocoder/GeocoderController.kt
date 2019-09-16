@@ -38,7 +38,6 @@ class GeocoderController(context: Context) {
 
     init {
         observeLatLong()
-
     }
 
     @SuppressLint("CheckResult")
@@ -48,7 +47,7 @@ class GeocoderController(context: Context) {
             .flatMapSingle { getAddress(it) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ addressSubject.onNext(it) }, { })
+            .subscribe({ addressSubject.onNext(it) })
     }
 
     fun updateAddress(latLong: LatLng) {
@@ -69,7 +68,7 @@ class GeocoderController(context: Context) {
         return Single.create {
             val addresses = geocoder.getFromLocation(latLong.latitude, latLong.longitude, 1)
 
-            if (addresses.isNotEmpty()) {
+            if (addresses.isNotEmpty() && addresses[0] != null) {
                 it.onSuccess(addresses[0])
             } else {
                 it.onSuccess(Address(Locale.getDefault()))
