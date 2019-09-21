@@ -52,9 +52,13 @@ class EasyMapsActivity : AppCompatActivity() {
 
         googleMapController = GoogleMapController()
 
-        intent?.extras?.getParcelable<SelectedAddressInfo>(KEY_SELECTED_ADDRESS)?.let {
-            easyMapsViewModel.initializeWithAddress(it)
-            fillFormWithInitialValues(it)
+        intent?.extras?.let {
+            it.getParcelable<SelectedAddressInfo>(KEY_SELECTED_ADDRESS)?.let {
+                easyMapsViewModel.initializeWithAddress(it)
+                fillFormWithInitialValues(it)
+            }
+
+            easyMapsViewModel.validateFields(it.getBoolean(KEY_VALIDATE_FIELDS, true))
         }
 
         observeFormBottomSheeet()
@@ -371,6 +375,10 @@ class EasyMapsActivity : AppCompatActivity() {
     }
 
     private fun validateForm(): Boolean {
+        if (easyMapsViewModel.isValidateNeed().not()) {
+            return true
+        }
+
         var isValidationOK = true
 
         if (editTextBuildingNo.text.isNullOrBlank()) {
@@ -394,14 +402,22 @@ class EasyMapsActivity : AppCompatActivity() {
     companion object {
 
         const val KEY_SELECTED_ADDRESS = "KEY_SELECTED_ADDRESS"
+        const val KEY_VALIDATE_FIELDS = "KEY_VALIDATE_FIELDS"
 
         const val REQUEST_CODE_LOCATION_PERMISSION = 12
         const val REQUEST_CODE_LOCATION_SETTINGS = 13
 
         @JvmStatic
-        fun newIntent(context: Context, selectedAddressInfo: SelectedAddressInfo? = null): Intent {
+        fun newIntent(
+            context: Context,
+            selectedAddressInfo: SelectedAddressInfo? = null,
+            validateFields: Boolean
+        ): Intent {
             return Intent(context, EasyMapsActivity::class.java)
-                .apply { putExtra(KEY_SELECTED_ADDRESS, selectedAddressInfo) }
+                .apply {
+                    putExtra(KEY_SELECTED_ADDRESS, selectedAddressInfo)
+                    putExtra(KEY_VALIDATE_FIELDS, validateFields)
+                }
         }
     }
 }

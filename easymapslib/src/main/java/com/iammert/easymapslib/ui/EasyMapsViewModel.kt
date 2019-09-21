@@ -39,6 +39,8 @@ class EasyMapsViewModel(val app: Application) : AndroidViewModel(app) {
 
     private var isInitializedWithAddress = false
 
+    private var validateFields = true
+
     init {
         selectedAddressViewStateLiveData.value = SelectedAddressViewState(selectedAddressInfo)
 
@@ -69,6 +71,12 @@ class EasyMapsViewModel(val app: Application) : AndroidViewModel(app) {
                 moveCameraToLatLong = true
             )
     }
+
+    fun validateFields(validateFields: Boolean) {
+        this.validateFields = validateFields
+    }
+
+    fun isValidateNeed(): Boolean = validateFields
 
     fun isInitializedWithAddress() = isInitializedWithAddress
 
@@ -155,7 +163,6 @@ class EasyMapsViewModel(val app: Application) : AndroidViewModel(app) {
 
         placesController.destroy()
         geocoderController.destroy()
-        Log.v("TEST", "destroyed")
     }
 
 }

@@ -17,7 +17,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         buttonSelectAddress.setOnClickListener {
-            startActivityForResult(EasyMapsActivity.newIntent(this, selectedAddressInfo), 11)
+            startActivityForResult(
+                EasyMapsActivity.newIntent(
+                    context = this,
+                    selectedAddressInfo = selectedAddressInfo,
+                    validateFields = false
+                ), 11
+            )
         }
     }
 
@@ -26,7 +32,8 @@ class MainActivity : AppCompatActivity() {
 
         if (requestCode == 11) {
             if (resultCode == Activity.RESULT_OK) {
-                selectedAddressInfo = data?.extras?.getParcelable(EasyMapsActivity.KEY_SELECTED_ADDRESS)
+                selectedAddressInfo =
+                    data?.extras?.getParcelable(EasyMapsActivity.KEY_SELECTED_ADDRESS)
                 textViewAddress.text = selectedAddressInfo.toString()
             }
         }
