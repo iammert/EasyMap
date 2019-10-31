@@ -14,6 +14,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
+import java.lang.Exception
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -47,7 +48,9 @@ class GeocoderController(context: Context) {
             .flatMapSingle { getAddress(it) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ addressSubject.onNext(it) })
+            .subscribe(
+                { addressSubject.onNext(it) },
+                { Log.v("TEST", "Error ${it.message}") })
     }
 
     fun updateAddress(latLong: LatLng) {
@@ -66,11 +69,14 @@ class GeocoderController(context: Context) {
 
     fun getAddress(latLong: LatLng): Single<Address> {
         return Single.create {
-            val addresses = geocoder.getFromLocation(latLong.latitude, latLong.longitude, 1)
-
-            if (addresses.isNotEmpty() && addresses[0] != null) {
-                it.onSuccess(addresses[0])
-            } else {
+            try {
+                val addresses = geocoder.getFromLocation(latLong.latitude, latLong.longitude, 1)
+                if (addresses.isNotEmpty() && addresses[0] != null) {
+                    it.onSuccess(addresses[0])
+                } else {
+                    it.onSuccess(Address(Locale.getDefault()))
+                }
+            } catch (e: Exception) {
                 it.onSuccess(Address(Locale.getDefault()))
             }
         }
