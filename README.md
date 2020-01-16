@@ -56,7 +56,7 @@ allprojects {
 }
 
 dependencies {
-    implementation 'com.github.momento-lab:EasyMap:0.1'
+    implementation 'com.github.iammert:EasyMap:0.1'
 }
 ```
 
